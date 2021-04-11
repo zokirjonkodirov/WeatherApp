@@ -9,6 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +31,19 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<currentWeatherResponce>, response: Response<currentWeatherResponce>) {
               val data = response.body()
-                if (response.isSuccessful && data != null)
-                {
-                val temperature = data.current.temperature
+                if (response.isSuccessful && data != null) {
+                    val temperature = data.current.temperature
                     val temperatureTextView = findViewById<TextView>(R.id.temperature)
                     temperatureTextView.setText("$temperature")
+
+                    val c = Calendar.getInstance()
+                    val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
+                    val month = c.get(Calendar.MONTH)
+                    val day = c.get(Calendar.DAY_OF_MONTH)
+
+                    val date = dayOfWeek.toString() + "," + " " + day.toString() + " " + month.toString()
+                    val dateTextView = findViewById<TextView>(R.id.date)
+                    dateTextView.setText("$dateTextView")
                 }
             }
 
